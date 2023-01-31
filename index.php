@@ -40,6 +40,17 @@ $hotels = [
 
 ];
 
+
+if (isset($_GET['vote']) && $_GET['vote'] !== '') {
+    $tempHotels = [];
+    foreach ($hotels as $hotel) {
+        if ($hotel['vote'] >= $_GET['vote']) {
+            $tempHotels[] = $hotel;
+        }
+    }
+    $hotels = $tempHotels;
+};
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -50,12 +61,25 @@ $hotels = [
     <title>document</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 
 <body>
     <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form action="./index.php" methods="GET">
+                    <div class="row">
+                        <div class="col-4 pt-5 d-flex">
+                            <input type="number" class="form-control" placeholder="vote" name="vote">
+                            <button type="submit" class="btn btn-primary ms-5">Filtra</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
         <div class="row">
             <div class="col">
                 <table class="table table-hover  mt-5">
@@ -70,29 +94,29 @@ $hotels = [
                     </thead>
                     <tbody>
                         <?php foreach ($hotels as $hotel) { ?>
-                        <tr>
-                            <td>
-                                <?php echo $hotel['name']; ?>
-                            </td>
-                            <td>
-                                <?php echo $hotel['description']; ?>
-                            </td>
-                            <td>
-                                <?php
+                            <tr>
+                                <td>
+                                    <?php echo $hotel['name']; ?>
+                                </td>
+                                <td>
+                                    <?php echo $hotel['description']; ?>
+                                </td>
+                                <td>
+                                    <?php
                                     if ($hotel['parking']) {
                                         echo 'sì';
                                     } else {
                                         echo 'no';
                                     }
                                     ?>
-                            </td>
-                            <td>
-                                <?php echo $hotel['vote']; ?>
-                            </td>
-                            <td>
-                                <?php echo $hotel['distance_to_center']; ?>
-                            </td>
-                        </tr>
+                                </td>
+                                <td>
+                                    <?php echo $hotel['vote']; ?>
+                                </td>
+                                <td>
+                                    <?php echo $hotel['distance_to_center']; ?>
+                                </td>
+                            </tr>
                         <?php } ?>
                     </tbody>
                 </table>
